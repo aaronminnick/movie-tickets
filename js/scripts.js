@@ -1,3 +1,4 @@
+//Business Logic
 function Ticket (nameOfMovie, time, age) {
   this.nameOfMovie = nameOfMovie;
   this.time = time;
@@ -10,11 +11,9 @@ Ticket.prototype.calculatePrice = function() {
   } else {
     this.price = 15;
   }
-  
   if (this.time < 1700) {
     this.price = this.price - 3;
   } 
-
   if (this.age >= 60) {
     this.price = this.price - 5;
   }
@@ -33,21 +32,46 @@ function Movie (nameOfMovie, daysOld) {
   this.daysOld = daysOld;
 }
 
-ourMarquee = new Marquee();
-carebears = new Movie("Care Bears", 1000);
+let ourMarquee = new Marquee();
+let carebears = new Movie("Care Bears", 1000);
 ourMarquee.addMovie(carebears);
+let dune = new Movie("Dune", 7);
+ourMarquee.addMovie(dune);
+let french = new Movie("The French Dispatch", 14);
+ourMarquee.addMovie(french);
+let goonies = new Movie("Goonies", 5000);
+ourMarquee.addMovie(goonies);
 
 
-let ticket = new Ticket();
+//UI logic
+function fillSelectName() {
+  let selectToFill = $("select#select-name");
+  Object.keys(ourMarquee.movies).forEach(function(key) {
+    selectToFill.append("<option value='" + key + "'>" + key + "</option>");
+  });
+}
 
 $(document).ready(function() {
-  
-})
+  fillSelectName();
+
+  $("#formOne").submit(function(event) {
+    event.preventDefault();
+    let ticketName = $("#select-name").val();
+    let ticketTime = $("#select-time").val();
+    let ticketAge = parseInt($("#input-age").val());
+
+    let ticket = new Ticket(ticketName, ticketTime, ticketAge);
+    ticket.calculatePrice();
+
+    $("#ticket-movie-name").html(ticket.nameOfMovie);
+
+    $("#ticket-time").html(ticket.time);
+
+    $("#ticket-price").html(ticket.price);
 
 
+    $("#ticket").show();
+  });
 
+});
 
-//new movie = $20
-//older movie = $15
-//Senior discount = over 60 - $5
-//Time = before 5:00 pm - $3

@@ -4,32 +4,42 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="css/styles.css" rel="stylesheet" type="text/css">
+  <script src="js/jquery-3.6.0.js"></script>
+  <script src="js/scripts.js"></script>
   <title>Ticket</title>
 </head>
 <body>
-  <form class="formOne">
-    <label for="select-name">Select a movie:</label>
-    <select id="select-name">
-      <option value="">---Please choose an option---</option>
-    </select>
-    
-    <label for="select-time">Select a time:</label>
-    <select id="select-time">
-      <option value="">---Please choose an option---</option>
-    </select>
-    <label for="input-age">Age</label>
-    <input id="input-age" type="number">
-    
-    <button type="submit" id="sub-button">Submit</button>
+  <div class="container">
+    <form id="formOne">
+      <label for="select-name">Select a movie:</label>
+      <select id="select-name">
+        <option value="">---Please choose an option---</option>
+      </select>
+      
+      <label for="select-time">Select a time:</label>
+      <select id="select-time">
+        <option value="">---Please choose an option---</option>
+        <option value="1200">12:00 Noon</option>
+        <option value="1500">3:00 PM</option>
+        <option value="1700">5:00 PM</option>
+        <option value="2000">8:00 PM</option>
+        <option value="2200">10:00 PM</option>
+      </select>
 
-    
-  </form>
+      <label for="input-age">Age</label>
+      <input id="input-age" type="number">
 
-  <div id="ticket-price">
+      <button type="submit" id="sub-button">Submit</button>
+    </form>
 
-
+    <div id="ticket">
+      <p>Movie: <span id="ticket-movie-name"></span></p>
+      <p>Time: <span id="ticket-time"></span></p>
+      <!-- <p>Discount: <span id="ticket-discount"></span></p> -->
+      <p>Price: <span id="ticket-price"></span></p>
+    </div> 
   </div>
-
-  
 </body>
 </html>

@@ -27,6 +27,8 @@ function Ticket (nameOfMovie, time, age) {
 }
 
 Ticket.prototype.calculatePrice = function() {
+  this.discounts = "";
+  
   if (ourMarquee.movies[this.nameOfMovie].daysOld <= 60) {
     this.price = 20;
   } else {
@@ -34,9 +36,11 @@ Ticket.prototype.calculatePrice = function() {
   }
   if (this.time < 1700) {
     this.price = this.price - 3;
+    this.discounts += "Matinee Discount! "
   } 
   if (this.age >= 60) {
     this.price = this.price - 5;
+    this.discounts += "Senior Discount!"
   }
 };
 
@@ -75,13 +79,19 @@ function fillSelectName() {
 
 function fillSelectTime(movie) {
   let selectTime = $("#select-time");
-  movieTimes.forEach(function(time) {
-    selectTime.append(<"option value= '" + time + "'>" + timeConverter(time) + "</option>"); 
-  })
+  let htmlString = "<option value=''>---Please choose an option---</option>";
+  movie.movieTimes.forEach(function(time) {
+    htmlString += "<option value= '" + time + "'>" + timeConverter(time) + "</option>"; 
+  });
+  selectTime.html(htmlString);
 }
 
 function attachTimeListener() {
-  $("#select-name").on("click", "option", fillSelectTime(ourMarquee.movies[this.value]));
+  $("#select-name").on("click", "option", function() {
+    if (this.value !== "") {
+      fillSelectTime(ourMarquee.movies[this.value]);
+    }
+  });
 }
 
 $(document).ready(function() {
@@ -98,17 +108,17 @@ $(document).ready(function() {
 
     $("#ticket-movie-name").html(ticket.nameOfMovie);
 
-    $("#ticket-time").html(ticket.time);
+    $("#ticket-time").html(timeConverter(ticket.time));
 
-    $("#ticket-price").html(ticket.price);
+    let discount = $("#ticket-discount");
+    if (ticket.discounts !== "") {
+      discount.html(ticket.discounts);
+    } else {
+      discount.html("No discount.");
+    }
 
+    $("#ticket-price").html("$" + ticket.price + ".00");
 
     $("#ticket").show();
   });
-
 });
-
-//1 write the time converter
-//2 store the array of times in either the marquee or the movie
-//3 attach a click listener to the time dropdown
-//4 make a function that populates the time dropdown, referencing #2- it will use the converter in #1 and will be used in #3

@@ -46,21 +46,22 @@ function Marquee () {
 
 Marquee.prototype.addMovie = function(movie) {
   this.movies[movie.nameOfMovie] = movie;
-}
+};
 
-function Movie (nameOfMovie, daysOld) {
+function Movie (nameOfMovie, daysOld, movieTimes) {
   this.nameOfMovie = nameOfMovie;
   this.daysOld = daysOld;
+  this.movieTimes = movieTimes;
 }
 
 let ourMarquee = new Marquee();
-let carebears = new Movie("Care Bears", 1000);
+let carebears = new Movie("Care Bears", 1000, ["0800", "1000", "1400"]);
 ourMarquee.addMovie(carebears);
-let dune = new Movie("Dune", 7);
+let dune = new Movie("Dune", 7, ["1400", "1800", "2400"]);
 ourMarquee.addMovie(dune);
-let french = new Movie("The French Dispatch", 14);
+let french = new Movie("The French Dispatch", 14, ["1300", "1800", "2400"]);
 ourMarquee.addMovie(french);
-let goonies = new Movie("Goonies", 5000);
+let goonies = new Movie("Goonies", 5000, ["1000", "1800", "2400"]);
 ourMarquee.addMovie(goonies);
 
 
@@ -72,9 +73,20 @@ function fillSelectName() {
   });
 }
 
+function fillSelectTime(movie) {
+  let selectTime = $("#select-time");
+  movieTimes.forEach(function(time) {
+    selectTime.append(<"option value= '" + time + "'>" + timeConverter(time) + "</option>"); 
+  })
+}
+
+function attachTimeListener() {
+  $("#select-name").on("click", "option", fillSelectTime(ourMarquee.movies[this.value]));
+}
+
 $(document).ready(function() {
   fillSelectName();
-
+  attachTimeListener();
   $("#formOne").submit(function(event) {
     event.preventDefault();
     let ticketName = $("#select-name").val();

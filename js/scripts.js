@@ -1,3 +1,24 @@
+//Utility Functions
+
+function timeConverter(time) {
+  if (time.length !== 4 || isNaN(parseInt(time))) {
+    return false;
+  }
+  hours = parseInt(time.slice(0, 2));
+  minutes = time.slice(2);
+  ampm = "";
+  if (hours === 0 || hours === 24) {
+    hours = 12;
+    ampm = " AM";
+  } else if (hours > 12) { //PM
+    hours -= 12;
+    ampm = " PM";
+  } else {//AM
+    ampm = " AM";
+  }
+  return hours.toString() + ":" + minutes + ampm;
+}
+
 //Business Logic
 function Ticket (nameOfMovie, time, age) {
   this.nameOfMovie = nameOfMovie;
@@ -75,3 +96,7 @@ $(document).ready(function() {
 
 });
 
+//1 write the time converter
+//2 store the array of times in either the marquee or the movie
+//3 attach a click listener to the time dropdown
+//4 make a function that populates the time dropdown, referencing #2- it will use the converter in #1 and will be used in #3
